@@ -6,18 +6,32 @@ require 'shared-mime-info'
 require 'net/http'
 require 'uri'
 
+# TarPipe is a bridge to the tarpipe.com's REST API
+#
+# Author:: Ruben Fonseca (mailto:root@cpan.org)
+# Copyright:: Copyright (c) 2008 Ruben Fonseca
+# License:: GPLv3 (see License.txt)
+
+# This class encapsulates the TarPipe funcionality
 class TarPipe
+  # TODO: These constants should turn into acessors in a future release
   ENDPOINT = 'rest.receptor.tarpipe.net'
   ENDPOINT_PORT = 8000
   
+  # This acessor allows the user to select the worflow token anytime
   attr_accessor :token
 
+  # Exception thrown when the user doesn't specify a workflow token
   class NoWorkflowToken < ArgumentError; end
 
+  # The token is optional
   def initialize(token = "")
     @token = token
   end
 
+  # Makes a call to a workflow. All the parameters are optional. The image parameter
+  # specifies the full path for an existing file. Raises NoWorkflowToken if the token
+  # does not exist.
   def upload(title = "", body = "", image = "")
     raise NoWorkflowToken, "TarPipe API requires your Workflow Token" unless @token
 
@@ -25,6 +39,8 @@ class TarPipe
   end
 
   private
+  # Encapsulates the upload operation. Encodes the multipart post, sets headers and
+  # uploads the request. Returns the result from the server.
   def post(path, args, image)
     content_type, body = encode_multipart_formdata(args, image)
 
@@ -39,6 +55,8 @@ class TarPipe
     data
   end
 
+  # Constructs a multipart/form-data body from the arguments and files passed
+  # as arguments.
   def encode_multipart_formdata(fields, files, boundary = "427e4cb4ca329_133ae40413c81ef")
     r = fields.inject('') do |result, element|
       unless element.last.empty?
@@ -68,6 +86,7 @@ class TarPipe
     return content_type, r
   end
 
+  # Tries to guess the mime type of a file. Defaults to application/octet-stream.
   def get_content_type(file)
     begin
       MIME.check(file).to_s
