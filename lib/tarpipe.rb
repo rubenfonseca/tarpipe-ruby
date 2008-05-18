@@ -9,6 +9,8 @@ require 'uri'
 class TarPipe
   ENDPOINT = 'rest.receptor.tarpipe.net'
   ENDPOINT_PORT = 8000
+  
+  attr_accessor :token
 
   class NoWorkflowToken < ArgumentError; end
 
@@ -16,11 +18,10 @@ class TarPipe
     @token = token
   end
 
-  def upload(title = "", body = "", image = "", token = "")
-    @token = token unless token.empty?
-    raise NoWorkflowToken, "TarPipe API requires your Workflow Token" if @token.empty?
+  def upload(title = "", body = "", image = "")
+    raise NoWorkflowToken, "TarPipe API requires your Workflow Token" unless @token
 
-    post "/?key=#{@token}", { :title => title, :body => body }, { :file => image }
+    post "/?key=#{@token}", { :title => title, :body => body }, { :image => image }
   end
 
   private
