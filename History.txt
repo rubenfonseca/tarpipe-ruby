@@ -1,0 +1,4 @@
+== 0.0.1 2008-05-18
+
+* Initial release:
+  * Behaviour very similar to the Python API (by Alcides Fonseca)
