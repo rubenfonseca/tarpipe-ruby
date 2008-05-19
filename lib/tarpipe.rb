@@ -14,9 +14,8 @@ require 'uri'
 
 # This class encapsulates the TarPipe funcionality
 class TarPipe
-  # TODO: These constants should turn into acessors in a future release
-  ENDPOINT = 'rest.receptor.tarpipe.net'
-  ENDPOINT_PORT = 8000
+  # If we want to change the endpoint
+  attr_accessor :endpoint, :endpoint_port
   
   # This acessor allows the user to select the worflow token anytime
   attr_accessor :token
@@ -27,6 +26,8 @@ class TarPipe
   # The token is optional
   def initialize(token = "")
     @token = token
+    @endpoint = 'rest.receptor.tarpipe.net'
+    @endpoint_port = 8000
   end
 
   # Makes a call to a workflow. All the parameters are optional. The image parameter
@@ -49,10 +50,15 @@ class TarPipe
       'Content-Type' => content_type
     }
 
-    http = Net::HTTP.new(ENDPOINT, ENDPOINT_PORT)
+    http = Net::HTTP.new(@endpoint, @endpoint_port)
     resp, data = http.post2(path, body, headers)
 
-    data
+    case resp
+    when Net::HTTPSuccess
+      true
+    else
+      false
+    end
   end
 
   # Constructs a multipart/form-data body from the arguments and files passed

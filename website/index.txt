@@ -20,7 +20,8 @@ h2. The basics
 <pre syntax="ruby">
 require 'tarpipe'
 t = TarPipe.new(<workflow token>)
-puts t.upload("Title", "Body", foo.jpg)
+t.upload("Title", "Body", foo.jpg)
+# returns true or false
 </pre>
 
 h2. How to submit patches

@@ -23,7 +23,8 @@ tarpipe is a publishing mediation and distribution platform that simplifies regu
 
   require 'tarpipe'
   t = TarPipe.new(<workflow token>)
-  puts t.upload("Title", "Body", foo.jpg)
+  t.upload("Title", "Body", foo.jpg)
+  # Returns true or false
 
 == REQUIREMENTS:
 

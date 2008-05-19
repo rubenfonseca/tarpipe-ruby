@@ -1,3 +1,9 @@
+== 0.0.2 2008-05-19
+
+* Small adjustments:
+  * endpoints are now acessors
+  * the TarPipe#upload now returns a boolean to indicate success or failure
+
 == 0.0.1 2008-05-18
 
 * Initial release:

@@ -18,6 +18,14 @@ describe TarPipe, " new instance" do
   end
 end
 
+describe TarPipe, " endpoints" do
+  it "should have an endpoint and endpoint_port acessor" do
+    t = TarPipe.new
+    t.endpoint.should == 'rest.receptor.tarpipe.net'
+    t.endpoint_port.should == 8000
+  end
+end
+
 describe TarPipe, " #upload" do
   GOOD_TOKEN = '0181f285f1cac168d358b8993fd75e3a'
   BAD_TOKEN  = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
@@ -37,8 +45,7 @@ describe TarPipe, " #upload" do
   it "should upload a title and body" do
     r = @t.upload('title', 'body')
 
-    r.should_not be_nil
-    r.should =~ %r{ok!} # XXX: this is not documented on the API
+    r.should be_true
   end
 
   it "should be capable to upload an image" do
@@ -50,8 +57,7 @@ describe TarPipe, " #upload" do
     # Upload it
     r = @t.upload('title', 'body', tf.path)
 
-    r.should_not be_nil
-    r.should =~ %r{ok!} # XXX: this is not documented on the API
+    r.should be_true
   end
 
   it "should give an error if we use an invalid workflow token" do
@@ -59,7 +65,6 @@ describe TarPipe, " #upload" do
 
     r = @t.upload 'title', 'body'
     
-    r.should_not be_nil
-    r.should =~ %r{Not found.} # XXX: this is not documented on the API
+    r.should be_false
   end
 end
