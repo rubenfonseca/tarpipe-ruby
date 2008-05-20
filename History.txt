@@ -1,3 +1,7 @@
+== 0.0.4 2008-05-20
+
+* Yet another doc update
+
 == 0.0.3 2008-05-20
 
 * Docs update:

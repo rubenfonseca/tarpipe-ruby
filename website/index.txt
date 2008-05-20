@@ -30,9 +30,9 @@ Fork the project on github (see below), change, commit, send patch to upstream, 
 
 You can fetch the source from:
 
-* github: "http://github.com/rubenfonseca/tarpipe/tree/master":http://github.com/rubenfonseca/tarpipe/tree/master
+* github: "http://github.com/rubenfonseca/tarpipe-ruby/tree/master":http://github.com/rubenfonseca/tarpipe-ruby/tree/master
 
-<pre>git clone git://github.com/rubenfonseca/tarpipe.git</pre>
+<pre>git clone git://github.com/rubenfonseca/tarpipe-ruby.git</pre>
 
 h3. Build and test instructions
 
