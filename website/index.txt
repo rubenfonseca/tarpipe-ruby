@@ -11,6 +11,11 @@ tarpipe is a publishing mediation and distribution platform that simplifies regu
     * Transforming documents on-the-fly;
     * Managing repeatable upload actions.
 
+h2. Authors
+    
+    * Ruben Fonseca @root (at) cpan (dot) org@
+    * Tiago Pinto @tpinto (at) webreakstuff (dot) org@
+
 h2. Installing
 
 <pre syntax="ruby">sudo gem install tarpipe</pre>
@@ -19,9 +24,10 @@ h2. The basics
 
 <pre syntax="ruby">
 require 'tarpipe'
-t = TarPipe.new(<workflow token>)
-t.upload("Title", "Body", foo.jpg)
+t = TarPipe.new('workflow token')
+t.upload(:title => 'title', :body => 'body', :image => 'image/full/path.png')
 # returns true or false
+# all the arguments are optional
 </pre>
 
 h2. How to submit patches

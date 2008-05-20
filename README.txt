@@ -2,9 +2,10 @@
 
 * http://tarpipe.rubyforge.org
 
-== AUTHOR:
+== AUTHORS:
 
 * Ruben Fonseca <root (at) cpan (dot) org>
+* Tiago Pinto <tpinto (at) webreakstuff (dot) com>
 
 == DESCRIPTION:
 
@@ -22,8 +23,8 @@ tarpipe is a publishing mediation and distribution platform that simplifies regu
 == SYNOPSIS:
 
   require 'tarpipe'
-  t = TarPipe.new(<workflow token>)
-  t.upload("Title", "Body", foo.jpg)
+  t = TarPipe.new('workflow token')
+  t.upload(:title => 'title', :body => 'body', :image => 'path/to/image')
   # Returns true or false
 
 == REQUIREMENTS:

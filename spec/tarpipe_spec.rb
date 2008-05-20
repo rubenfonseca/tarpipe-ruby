@@ -5,16 +5,16 @@ require 'tempfile'
 describe TarPipe, " new instance" do
   SAMPLE_TOKEN = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxx'
 
-  it "should create a new instance without token" do
+  it "should create a new instance without key" do
     t = TarPipe.new
     t.should_not be_nil
-    t.token.should be_empty
+    t.key.should be_empty
   end
 
-  it "should create an instance with a token" do
+  it "should create an instance with a key" do
     t = TarPipe.new(SAMPLE_TOKEN)
     t.should_not be_nil
-    t.token.should == SAMPLE_TOKEN
+    t.key.should == SAMPLE_TOKEN
   end
 end
 
@@ -34,16 +34,16 @@ describe TarPipe, " #upload" do
     @t = TarPipe.new(GOOD_TOKEN)
   end
 
-  it "should throw NoWorkflowToken if there is no token" do
-    @t.token = nil
+  it "should throw NoWorkflowKey if there is no key" do
+    @t.key = nil
 
     proc do
-      @t.upload('title', 'body')
-    end.should raise_error(TarPipe::NoWorkflowToken)
+      @t.upload(:title => 'title', :body => 'body')
+    end.should raise_error(TarPipe::NoWorkflowKey)
   end
 
   it "should upload a title and body" do
-    r = @t.upload('title', 'body')
+    r = @t.upload :title => 'title', :body => 'body'
 
     r.should be_true
   end
@@ -55,16 +55,15 @@ describe TarPipe, " #upload" do
     tf.flush
 
     # Upload it
-    r = @t.upload('title', 'body', tf.path)
+    r = @t.upload(:title => 'title', :body => 'body', :image => tf.path)
 
     r.should be_true
   end
 
-  it "should give an error if we use an invalid workflow token" do
-    @t.token = BAD_TOKEN
+  it "should give an error if we use an invalid workflow key" do
+    @t.key = BAD_TOKEN
 
-    r = @t.upload 'title', 'body'
-    
+    r = @t.upload :title => 'title', :body => 'body'
     r.should be_false
   end
 end

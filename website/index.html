@@ -33,7 +33,7 @@
     <h1>TarPipe API for Ruby</h1>
     <div id="version" class="clickable" onclick='document.location = "http://rubyforge.org/projects/tarpipe"; return false'>
       <p>Get Version</p>
-      <a href="http://rubyforge.org/projects/tarpipe" class="numbers">0.0.3</a>
+      <a href="http://rubyforge.org/projects/tarpipe" class="numbers">0.1.0</a>
     </div>
     <h1>&#x2192; &#8216;tarpipe&#8217;</h1>
 
@@ -52,6 +52,15 @@
 	</ul>
 
 
+	<h2>Authors</h2>
+
+
+	<ul>
+	<li>Ruben Fonseca <code>root (at) cpan (dot) org</code></li>
+		<li>Tiago Pinto <code>tpinto (at) webreakstuff (dot) org</code></li>
+	</ul>
+
+
 	<h2>Installing</h2>
 
 
@@ -63,9 +72,10 @@
 
 	<p><pre class='syntax'>
 <span class="ident">require</span> <span class="punct">'</span><span class="string">tarpipe</span><span class="punct">'</span>
-<span class="ident">t</span> <span class="punct">=</span> <span class="constant">TarPipe</span><span class="punct">.</span><span class="ident">new</span><span class="punct">(&lt;</span><span class="ident">workflow</span> <span class="ident">token</span><span class="punct">&gt;)</span>
-<span class="ident">t</span><span class="punct">.</span><span class="ident">upload</span><span class="punct">(&quot;</span><span class="string">Title</span><span class="punct">&quot;,</span> <span class="punct">&quot;</span><span class="string">Body</span><span class="punct">&quot;,</span> <span class="ident">foo</span><span class="punct">.</span><span class="ident">jpg</span><span class="punct">)</span>
+<span class="ident">t</span> <span class="punct">=</span> <span class="constant">TarPipe</span><span class="punct">.</span><span class="ident">new</span><span class="punct">('</span><span class="string">workflow token</span><span class="punct">')</span>
+<span class="ident">t</span><span class="punct">.</span><span class="ident">upload</span><span class="punct">(</span><span class="symbol">:title</span> <span class="punct">=&gt;</span> <span class="punct">'</span><span class="string">title</span><span class="punct">',</span> <span class="symbol">:body</span> <span class="punct">=&gt;</span> <span class="punct">'</span><span class="string">body</span><span class="punct">',</span> <span class="symbol">:image</span> <span class="punct">=&gt;</span> <span class="punct">'</span><span class="string">image/full/path.png</span><span class="punct">')</span>
 <span class="comment"># returns true or false</span>
+<span class="comment"># all the arguments are optional</span>
 </pre></p>
 
 

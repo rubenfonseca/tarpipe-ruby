@@ -17,33 +17,47 @@ class TarPipe
   # If we want to change the endpoint
   attr_accessor :endpoint, :endpoint_port
   
-  # This acessor allows the user to select the worflow token anytime
-  attr_accessor :token
+  # This acessor allows the user to select the worflow key anytime
+  attr_accessor :key
 
-  # Exception thrown when the user doesn't specify a workflow token
-  class NoWorkflowToken < ArgumentError; end
+  # Error thrown when the user doesn't specify a workflow key
+  class NoWorkflowKey < ArgumentError; end
 
-  # The token is optional
-  def initialize(token = "")
-    @token = token
+  # The key is optional
+  def initialize(key = "")
+    @key = key
     @endpoint = 'rest.receptor.tarpipe.net'
     @endpoint_port = 8000
   end
 
-  # Makes a call to a workflow. All the parameters are optional. The image parameter
-  # specifies the full path for an existing file. Raises NoWorkflowToken if the token
-  # does not exist.
-  def upload(title = "", body = "", image = "")
-    raise NoWorkflowToken, "TarPipe API requires your Workflow Token" unless @token
+  # Makes a call to a workflow. All the parameters are optional:
+  #  :title a title
+  #  :body  a body
+  #  :image a fill path for an existing file
+  def upload(params = {})
+    @key = params[:key] if params[:key]
+    raise NoWorkflowKey, "TarPipe API requires your Workflow Key" unless @key
 
-    post "/?key=#{@token}", { :title => title, :body => body }, { :image => image }
+    # Filter arguments
+    args = [:title, :body].inject({}) do |res, arg|
+      res[arg] = params[arg] if params[arg]
+      res
+    end
+
+    # Filter files
+    files = [:image].inject({}) do |res, arg|
+      res[arg] = params[arg] if params[arg]
+      res
+    end
+
+    post "/?key=#{@key}", args, files
   end
 
   private
   # Encapsulates the upload operation. Encodes the multipart post, sets headers and
   # uploads the request. Returns the result from the server.
-  def post(path, args, image)
-    content_type, body = encode_multipart_formdata(args, image)
+  def post(path, args, files)
+    content_type, body = encode_multipart_formdata(args, files)
 
     headers = {
       'User-Agent' => 'TarPipe-Ruby',
@@ -65,23 +79,19 @@ class TarPipe
   # as arguments.
   def encode_multipart_formdata(fields, files, boundary = "427e4cb4ca329_133ae40413c81ef")
     r = fields.inject('') do |result, element|
-      unless element.last.empty?
-        result << "--" << boundary << "\r\n"
-        result << "Content-Disposition: form-data; name=\"#{element.first}\"\r\n\r\n"
-        result << element.last
-      end
+      result << "--" << boundary << "\r\n"
+      result << "Content-Disposition: form-data; name=\"#{element.first}\"\r\n\r\n"
+      result << element.last
 
       result
     end
     
     r << files.inject('') do |result, element|
-      unless element.last.empty?
-        result << "\r\n--" << boundary << "\r\n"
-        result << "Content-Disposition: form-data; name=\"#{element.first}\";"
-        result << "filename=\"#{element.last}\"\r\n"
-        result << "Content-Type: #{get_content_type(element.last)}\r\n\r\n"
-        result << File.new(element.last, 'r').read
-      end
+      result << "\r\n--" << boundary << "\r\n"
+      result << "Content-Disposition: form-data; name=\"#{element.first}\";"
+      result << "filename=\"#{element.last}\"\r\n"
+      result << "Content-Type: #{get_content_type(element.last)}\r\n\r\n"
+      result << File.new(element.last, 'r').read
 
       result
     end

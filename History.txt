@@ -1,3 +1,10 @@
+== 0.0.5 2008-05-20
+
+* API changes
+    * The #upload method now accepts an hash with the options
+    * It allows to more API stability in the future
+    * Update docs to match the new API
+
 == 0.0.4 2008-05-20
 
 * Yet another doc update
