@@ -1,4 +1,9 @@
-== 0.0.5 2008-05-20
+== 0.1.1 2008-05-20
+
+* Docs change
+    * Tiago Pinto email had a typo
+
+== 0.1.0 2008-05-20
 
 * API changes
     * The #upload method now accepts an hash with the options

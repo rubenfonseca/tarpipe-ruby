@@ -14,7 +14,7 @@ tarpipe is a publishing mediation and distribution platform that simplifies regu
 h2. Authors
     
     * Ruben Fonseca @root (at) cpan (dot) org@
-    * Tiago Pinto @tpinto (at) webreakstuff (dot) org@
+    * Tiago Pinto @tpinto (at) webreakstuff (dot) com@
 
 h2. Installing
 
