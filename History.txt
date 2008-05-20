@@ -1,3 +1,8 @@
+== 0.0.3 2008-05-20
+
+* Docs update:
+  * Git repository URL was wrong
+
 == 0.0.2 2008-05-19
 
 * Small adjustments:
